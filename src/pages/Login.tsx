@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { User } from "../types/user";
 
-const Login: React.FC = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [users, setUsers] = useState<{ username: string; password: string }[]>(
-    []
-  );
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data))
-      .catch((err) => console.error("Error in fetching:", err));
+    axios
+      .get("http://localhost:5000/users")
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((err) => {
+        console.error("Error in fetching", err.message);
+        setError("Failed to fetch");
+      });
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const user = users.find(
-      (u) => u.username === username && u.password === password
+      (user) => user.username === username && user.password === password
     );
 
     if (user) {
@@ -27,6 +32,14 @@ const Login: React.FC = () => {
     } else {
       setError("Invalid username or password");
     }
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
   return (
@@ -40,14 +53,14 @@ const Login: React.FC = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
             className="border-2 border-gray-300 w-full p-3 rounded-md"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             className="border-2 border-gray-300 p-3 w-full rounded-md"
           />
           <button
