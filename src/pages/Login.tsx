@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 
-const Login: React.FC = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
@@ -15,17 +23,17 @@ const Login: React.FC = () => {
             type="text"
             placeholder="Username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
             className="border-2 border-gray-300 w-full p-3 rounded-md"
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             className="border-2 border-gray-300 p-3 w-full rounded-md"
           />
-          <button className="bg-color-green text-white px-6 py-3 w-full rounded-md">
+          <button className="bg-button-color text-white px-6 py-3 w-full rounded-md">
             Login
           </button>
         </form>

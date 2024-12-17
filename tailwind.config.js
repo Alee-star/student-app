@@ -3,7 +3,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        "color-green": "rgb(63, 25, 109)",
+        "button-color": "rgb(63, 25, 109)",
       },
     },
   },
