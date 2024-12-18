@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { User } from "../types/userList";
 import UserForm from "../components/UserForm";
+import { User } from "../types/userList";
 
 const Login = () => {
   const [error, setError] = useState("");

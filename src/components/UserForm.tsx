@@ -43,7 +43,7 @@ const UserForm = ({
             placeholder="Username"
             value={username}
             onChange={handleUsernameChange}
-            className="border-2 border-gray-300 w-full w-full p-3 rounded-md"
+            className="border-2 border-gray-300 w-full p-3 rounded-md"
           />
           <input
             type="password"
