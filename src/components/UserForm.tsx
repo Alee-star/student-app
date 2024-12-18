@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { UserFormProps } from "../types/user";
+import { UserFormProps } from "../types/userList";
 
 const UserForm = ({
   onSubmit,
