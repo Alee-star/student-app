@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { UserFormProps } from "../types/userList";
+
+type UserFormProps = {
+  onSubmit: (user: { username: string; password: string }) => void;
+  error?: string;
+  heading: string;
+  buttonText: string;
+  linkText?: string;
+  linkUrl?: string;
+  signText?: string;
+};
 
 const UserForm = ({
   onSubmit,
@@ -58,7 +67,7 @@ const UserForm = ({
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           {linkText && (
             <p className="text-center">
-              {linkText}{" "}
+              {linkText}
               <a href={linkUrl} className="text-blue-500 hover:underline">
                 {signText}
               </a>
