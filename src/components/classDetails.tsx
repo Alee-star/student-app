@@ -1,24 +1,8 @@
 import React from "react";
-
-interface Marks {
-  subject: string;
-  mark: number;
-}
-
-interface Student {
-  name: string;
-  id: string;
-  marks: Marks[];
-}
-
-interface classData {
-  name: string;
-  teacherName: string;
-  students: Student[];
-}
+import { ClassData } from "../types/userList";
 
 interface ClassDetailsProps {
-  classData: classData | null;
+  classData: ClassData | null;
 }
 
 const ClassDetails: React.FC<ClassDetailsProps> = ({ classData }) => {

@@ -1,47 +1,49 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../api";
 import ClassDetails from "../components/classDetails";
-
-interface Marks {
-  subject: string;
-  mark: number;
-}
-
-interface Student {
-  name: string;
-  id: string;
-  marks: Marks[];
-}
-
-interface ClassData {
-  name: string;
-  teacherName: string;
-  students: Student[];
-}
+import { ClassData } from "../types/userList";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const [classData, setClassData] = useState<ClassData | null>(null);
+  const [classNames, setClassNames] = useState<string[]>([]);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
 
   useEffect(() => {
-    if (activeTab) {
-      fetch("/data.json")
-        .then((response) => response.json())
-        .then((data) => {
-          const selectedClass = data.classes.find(
+    const fetchClassNames = async () => {
+      try {
+        const response = await api.get("/data.json");
+        const classNames = response.data.classes.map(
+          (cls: ClassData) => cls.name
+        );
+        setClassNames(classNames);
+      } catch (error) {
+        console.error("Error fetching class names:", error);
+      }
+    };
+    fetchClassNames();
+  }, []);
+
+  useEffect(() => {
+    const fetchClassData = async () => {
+      try {
+        if (activeTab) {
+          const response = await api.get("/data.json");
+          const selectedClass = response.data.classes.find(
             (cls: ClassData) =>
               cls.name.toLowerCase() === activeTab.toLowerCase()
           );
           setClassData(selectedClass || null);
-        })
-        .catch((error) => console.error("Error fetching data:", error));
-    } else {
-      setClassData(null);
-    }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      fetchClassData();
+    };
   }, [activeTab]);
 
   return (
@@ -62,7 +64,7 @@ const Banner = () => {
         </Link>
       </div>
       <div className="absolute top-20 flex space-x-4">
-        {["Class A", "Class B", "Class C"].map((tab) => (
+        {classNames.map((tab) => (
           <button
             key={tab}
             className={`px-6 py-2 rounded-lg shadow-lg font-medium transition-transform duration-300 ${
