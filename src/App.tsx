@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router-dom";
+
 import Banner from "./pages/Banner";
 import Login from "./pages/Login";
 import SignIn from "./pages/Sign";
 import StudentsPage from "./pages/Students";
 import TeachersPage from "./pages/Teachers";
+
 import { AppRoutes } from "./routes/path";
 import "./App.css";
 
