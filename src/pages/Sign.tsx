@@ -18,7 +18,7 @@ const SignIn = () => {
 
     try {
       // for existing users
-      const response = await axiosPage.get("http://localhost:5000/users");
+      const response = await axiosPage.get("/users");
       const PrevUser = response.data.find(
         (user: User) => user.username === username
       );
@@ -34,7 +34,7 @@ const SignIn = () => {
         password,
       };
 
-      await axiosPage.post("http://localhost:5000/users", newUser);
+      await axiosPage.post("/users", newUser);
 
       setError("");
       alert("Account created successfully!");
