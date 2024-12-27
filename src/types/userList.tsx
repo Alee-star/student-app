@@ -14,7 +14,7 @@ export interface Student {
   marks: Mark[];
 }
 
-export interface ClassData {
+export interface Class {
   name: string;
   teacherName: string;
   students: Student[];

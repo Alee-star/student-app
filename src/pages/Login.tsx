@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosPage from "../axios";
 import UserForm from "../components/UserForm";
 import { User } from "../types/userList";
 import { AppRoutes } from "../routes/path";
@@ -13,7 +13,7 @@ const Login = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/users");
+        const response = await axiosPage.get("/users");
         setUsers(response.data);
       } catch (err: any) {
         console.error("Error in fetching", err.message);

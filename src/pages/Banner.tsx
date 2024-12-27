@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
 import ClassDetails from "../components/classDetails";
-import { ClassData } from "../types/userList";
+import { Class } from "../types/userList";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
-  const [classData, setClassData] = useState<ClassData | null>(null);
+  const [classData, setClassData] = useState<Class | null>(null);
   const [classNames, setClassNames] = useState<string[]>([]);
 
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
+  const handleTabClick = (tabId: string) => {
+    setActiveTab(tabId);
   };
 
   useEffect(() => {
     const fetchClassNames = async () => {
       try {
         const response = await api.get("/data.json");
-        const classNames = response.data.classes.map(
-          (cls: ClassData) => cls.name
-        );
+        const classNames = response.data.classes.map((cls: Class) => cls.name);
         setClassNames(classNames);
       } catch (error) {
         console.error("Error fetching class names:", error);
@@ -34,8 +32,7 @@ const Banner = () => {
         if (activeTab) {
           const response = await api.get("/data.json");
           const selectedClass = response.data.classes.find(
-            (cls: ClassData) =>
-              cls.name.toLowerCase() === activeTab.toLowerCase()
+            (cls: Class) => cls.name.toLowerCase() === activeTab.toLowerCase()
           );
           setClassData(selectedClass || null);
         }
@@ -67,6 +64,7 @@ const Banner = () => {
         {classNames.map((tab) => (
           <button
             key={tab}
+            id={tab}
             className={`px-6 py-2 rounded-lg shadow-lg font-medium transition-transform duration-300 ${
               activeTab === tab
                 ? "bg-blue-500 text-white scale-10"
