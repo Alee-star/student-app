@@ -55,7 +55,7 @@ const StudentsPage = () => {
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80 text-center">
         <h1 className="text-xl font-bold">Students</h1>
         {hasSearched && filteredStudents.length === 0 ? (
-          <p>No Students Found</p>
+          <p className="pt-2">No Students Found</p>
         ) : (
           <ul>
             {filteredStudents.map((student) => (
