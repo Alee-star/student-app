@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchClassNames } from "../components/classResources";
-import api from "../api";
 import { Class } from "../types/userList";
+import api from "../api";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
@@ -27,24 +27,26 @@ const Banner = () => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        if (activeTab) {
-          const response = await api.get("/data.json");
-          const selectedClass = response.data.classes.find(
-            (cls: Class) => cls.name.toLowerCase() === activeTab.toLowerCase()
-          );
-          setClassData(selectedClass || null);
-        }
+        const response = await api.get("/data.json");
+        const selectedClass = response.data.classes.find(
+          (cls: Class) => cls.name.toLowerCase() === activeTab?.toLowerCase()
+        );
+        setClassData(selectedClass || null);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+
+    if (activeTab) {
+      fetchClassData();
+    }
 
     fetchClassData();
   }, [activeTab]);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-banner bg-cover">
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50" />
       <div className="absolute top-10 flex space-x-4">
         {classNames.map((tab) => (
           <button

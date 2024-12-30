@@ -1,5 +1,5 @@
-import api from "../api";
 import { Class } from "../types/userList";
+import api from "../api";
 
 export const fetchClassNames = async (): Promise<string[]> => {
   try {
