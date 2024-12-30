@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import api from "../api";
 import { Student } from "../types/userList";
+import api from "../api";
 
 const StudentsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
