@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
+import api from "../api";
 
 const TeachersPage = () => {
   const [teachers, setTeachers] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
-    fetch("/data.json")
+    api
+      .get("/classes")
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        return response.json();
-      })
-      .then((data) => {
         const teacherData: { [key: string]: string } = {};
-        data.classes.forEach(
+        response.data.forEach(
           (classItem: { name: string; teacherName: string }) => {
             teacherData[classItem.name] = classItem.teacherName;
           }

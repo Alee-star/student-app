@@ -11,8 +11,8 @@ const StudentsPage = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await api.get("/data.json");
-        const classes = response.data.classes;
+        const response = await api.get("/classes");
+        const classes = response.data;
         const allStudents = classes.flatMap((cls: any) => cls.students);
         setStudents(allStudents);
         setFilteredStudents([]);
