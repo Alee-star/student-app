@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchClassNames } from "../components/classResources";
+import { fetchClassNames } from "../helpers";
 import { Class } from "../types/userList";
 import api from "../api";
 
@@ -27,8 +27,8 @@ const Banner = () => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const response = await api.get("/data.json");
-        const selectedClass = response.data.classes.find(
+        const response = await api.get("/classes");
+        const selectedClass = response.data.find(
           (cls: Class) => cls.name.toLowerCase() === activeTab?.toLowerCase()
         );
         setClassData(selectedClass || null);
@@ -40,8 +40,6 @@ const Banner = () => {
     if (activeTab) {
       fetchClassData();
     }
-
-    fetchClassData();
   }, [activeTab]);
 
   return (

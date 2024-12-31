@@ -18,7 +18,7 @@ const SignIn = () => {
 
     try {
       // for existing users
-      const response = await api.get("http://localhost:5000/users");
+      const response = await api.get("/users");
       const PrevUser = response.data.find(
         (user: User) => user.username === username
       );
@@ -34,7 +34,7 @@ const SignIn = () => {
         password,
       };
 
-      await api.post("http://localhost:5000/users", newUser);
+      await api.post("/users", newUser);
 
       setError("");
       alert("Account created successfully!");

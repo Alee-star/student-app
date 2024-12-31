@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api";
 import UserForm from "../components/UserForm";
 import { User } from "../types/userList";
 import { AppRoutes } from "../routes/path";
+import api from "../api";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -13,7 +13,7 @@ const Login = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get("http://localhost:5000/users");
+        const response = await api.get("/users");
         setUsers(response.data);
       } catch (err: any) {
         console.error("Error in fetching", err.message);
