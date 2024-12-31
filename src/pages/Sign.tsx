@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../components/UserForm";
 import { User } from "../types/userList";
-import axiosPage from "../axios";
+import api from "../api";
 
 const SignIn = () => {
   const [error, setError] = useState("");
@@ -18,7 +18,7 @@ const SignIn = () => {
 
     try {
       // for existing users
-      const response = await axiosPage.get("/users");
+      const response = await api.get("http://localhost:5000/users");
       const PrevUser = response.data.find(
         (user: User) => user.username === username
       );
@@ -34,7 +34,7 @@ const SignIn = () => {
         password,
       };
 
-      await axiosPage.post("/users", newUser);
+      await api.post("http://localhost:5000/users", newUser);
 
       setError("");
       alert("Account created successfully!");
