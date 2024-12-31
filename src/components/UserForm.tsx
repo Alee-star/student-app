@@ -68,7 +68,7 @@ const UserForm = ({
           {linkText && (
             <p className="text-center">
               {linkText}
-              <a href={linkUrl} className="text-blue-500 hover:underline">
+              <a href={linkUrl} className="text-blue-500 hover:underline pl-2">
                 {signText}
               </a>
             </p>
