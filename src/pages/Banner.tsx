@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ClassDetails from "../components/classDetails";
+import { fetchClassNames } from "../helpers";
 import { Class } from "../types/userList";
 import api from "../api";
 
@@ -14,23 +15,22 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    const fetchClassNames = async () => {
+    const getClassNames = async () => {
       try {
-        const response = await api.get("/data.json");
-        const classNames = response.data.classes.map((cls: Class) => cls.name);
-        setClassNames(classNames);
+        const names = await fetchClassNames();
+        setClassNames(names);
       } catch (error) {
-        console.error("Error fetching class names:", error);
+        console.error("Error in fetching class names:", error);
       }
     };
-    fetchClassNames();
+    getClassNames();
   }, []);
 
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const response = await api.get("/data.json");
-        const selectedClass = response.data.classes.find(
+        const response = await api.get("/classes");
+        const selectedClass = response.data.find(
           (cls: Class) => cls.name.toLowerCase() === activeTab?.toLowerCase()
         );
         setClassData(selectedClass || null);
@@ -42,8 +42,6 @@ const Banner = () => {
     if (activeTab) {
       fetchClassData();
     }
-
-    fetchClassData();
   }, [activeTab]);
 
   return (

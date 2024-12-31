@@ -1,11 +1,10 @@
-import React from "react";
-import { ClassData } from "../types/userList";
+import { Class } from "../types/userList";
 
 interface ClassDetailsProps {
-  classData: ClassData | null;
+  classData: Class | null;
 }
 
-const ClassDetails: React.FC<ClassDetailsProps> = ({ classData }) => {
+const ClassDetails = ({ classData }: ClassDetailsProps) => {
   if (!classData) {
     return null;
   }
