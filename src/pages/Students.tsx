@@ -12,8 +12,8 @@ const StudentsPage = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await api.get("/data.json");
-        const classesData = response.data.classes;
+        const response = await api.get("/classes");
+        const classesData = response.data;
         setClasses(classesData.map((cls: any) => cls.name));
         const allStudents = classesData.flatMap((cls: any) =>
           cls.students.map((student: any) => ({
