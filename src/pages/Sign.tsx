@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import UserForm from "../components/UserForm";
 import { User } from "../types/userList";
+import api from "../api";
 
 const SignIn = () => {
   const [error, setError] = useState("");
@@ -18,7 +18,7 @@ const SignIn = () => {
 
     try {
       // for existing users
-      const response = await axios.get("http://localhost:3000/users");
+      const response = await api.get("/users");
       const PrevUser = response.data.find(
         (user: User) => user.username === username
       );
@@ -34,7 +34,7 @@ const SignIn = () => {
         password,
       };
 
-      await axios.post("http://localhost:3000/users", newUser);
+      await api.post("/users", newUser);
 
       setError("");
       alert("Account created successfully!");
