@@ -23,7 +23,7 @@ const TeachersPage = () => {
 
   return (
     <div className="bg-teacher bg-cover h-screen flex items-center justify-center">
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50" />
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80">
         <h1 className="text-xl font-bold mb-4">Teachers</h1>
         <ul>
