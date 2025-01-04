@@ -31,7 +31,7 @@ const Banner = () => {
       try {
         if (activeTab) {
           const response = await getClasses();
-          const selectedClass = response.data.find(
+          const selectedClass = response.find(
             (cls: Class) => cls.name.toLowerCase() === activeTab.toLowerCase()
           );
           setClassData(selectedClass || null);
