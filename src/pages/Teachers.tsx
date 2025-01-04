@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
+import { Class, Teacher } from "../types/userList";
 import api from "../api";
 
 const TeachersPage = () => {
-  const [teachers, setTeachers] = useState<{ [key: string]: string }>({});
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   useEffect(() => {
     api
       .get("/classes")
       .then((response) => {
-        const teacherData: { [key: string]: string } = {};
-        response.data.forEach(
-          (classItem: { name: string; teacherName: string }) => {
-            teacherData[classItem.name] = classItem.teacherName;
-          }
+        const teacherData: Teacher[] = response.data.map(
+          (classItem: Class) => ({
+            name: classItem.name,
+            teacherName: classItem.teacherName,
+          })
         );
         setTeachers(teacherData);
       })
@@ -27,13 +28,13 @@ const TeachersPage = () => {
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80">
         <h1 className="text-xl font-bold mb-4">Teachers</h1>
         <ul>
-          {Object.entries(teachers).map(([className, teacherName]) => (
+          {teachers.map((teacher, index) => (
             <li
-              key={className}
+              key={index}
               className="mb-2 text-lg flex justify-between border-b pb-2"
             >
-              <span className="capitalize">{className}:</span>
-              <strong>{teacherName}</strong>
+              <span className="capitalize">{teacher.name}:</span>
+              <strong>{teacher.teacherName}</strong>
             </li>
           ))}
         </ul>
