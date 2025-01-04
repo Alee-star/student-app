@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api";
+import { getClasses } from "../api";
 import { Student } from "../types/userList";
 
 const StudentsPage = () => {
@@ -12,8 +12,7 @@ const StudentsPage = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await api.get("/classes");
-        const classesData = response.data;
+        const classesData = await getClasses();
         setClasses(classesData.map((cls: any) => cls.name));
         const allStudents = classesData.flatMap((cls: any) =>
           cls.students.map((student: any) => ({

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchClassNames } from "../helpers";
 import ClassDetails from "../components/classDetails";
 import { Class } from "../types/userList";
-import api from "../api";
+import { fetchClassNames } from "../helpers";
+import { getClasses } from "../api";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
@@ -30,7 +30,7 @@ const Banner = () => {
     const fetchClassData = async () => {
       try {
         if (activeTab) {
-          const response = await api.get("/classes");
+          const response = await getClasses();
           const selectedClass = response.data.find(
             (cls: Class) => cls.name.toLowerCase() === activeTab.toLowerCase()
           );
