@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ClassDetails from "../components/classDetails";
+import ClassDetails from "../components/ClassDetails";
 import { fetchClassNames } from "../helpers";
 import { Class } from "../types/userList";
 import api from "../api";
@@ -10,8 +10,9 @@ const Banner = () => {
   const [classData, setClassData] = useState<Class | null>(null);
   const [classNames, setClassNames] = useState<string[]>([]);
 
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
+  const handleTabClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const clickedTab = event.currentTarget.id;
+    setActiveTab(clickedTab);
   };
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const Banner = () => {
                 ? "bg-blue-500 text-white scale-10"
                 : "bg-gray-200 text-gray-700 hover:bg-blue-400 hover:text-white"
             }`}
-            onClick={() => handleTabClick(tab)}
+            onClick={handleTabClick}
           >
             {tab}
           </button>
