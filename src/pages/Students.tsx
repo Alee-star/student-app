@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Student } from "../types/userList";
-import api from "../api";
+import { getStudents } from "../services/StudentService";
 
 const StudentsPage = () => {
   const [students, setStudents] = useState<Student[]>([]);
@@ -8,9 +8,7 @@ const StudentsPage = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await api.get("/classes");
-        const classes = response.data;
-        const allStudents = classes.flatMap((cls: any) => cls.students);
+        const allStudents = await getStudents();
         setStudents(allStudents);
       } catch (error) {
         console.error("Error fetching students data:", error);
