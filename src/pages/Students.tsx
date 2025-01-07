@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { getStudents } from "../services/StudentService";
 import { Student } from "../types/userList";
-import api from "../api";
 
 const StudentsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,11 +11,8 @@ const StudentsPage = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await api.get("/classes");
-        const classes = response.data;
-        const allStudents = classes.flatMap((cls: any) => cls.students);
+        const allStudents = await getStudents();
         setStudents(allStudents);
-        setFilteredStudents([]);
       } catch (error) {
         console.error("Error fetching students data:", error);
       }
