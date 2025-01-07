@@ -1,36 +1,18 @@
 import { useEffect, useState } from "react";
+import { Class, Teacher } from "../types/userList";
 import { getClasses } from "../api";
 
 const TeachersPage = () => {
-  const [teachers, setTeachers] = useState<{ [key: string]: string }>({});
-
-  // useEffect(() => {
-  //   api
-  //     .get("/classes")
-  //     .then((response) => {
-  //       const teacherData: { [key: string]: string } = {};
-  //       response.data.forEach(
-  //         (classItem: { name: string; teacherName: string }) => {
-  //           teacherData[classItem.name] = classItem.teacherName;
-  //         }
-  //       );
-  //       setTeachers(teacherData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
         const classesData = await getClasses();
-        const teacherData: { [key: string]: string } = {};
-        classesData.forEach(
-          (classItem: { name: string; teacherName: string }) => {
-            teacherData[classItem.name] = classItem.teacherName;
-          }
-        );
+        const teacherData: Teacher[] = classesData.map((classItem: Class) => ({
+          name: classItem.name,
+          teacherName: classItem.teacherName,
+        }));
         setTeachers(teacherData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,13 +27,13 @@ const TeachersPage = () => {
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80">
         <h1 className="text-xl font-bold mb-4">Teachers</h1>
         <ul>
-          {Object.entries(teachers).map(([className, teacherName]) => (
+          {teachers.map((teacher, index) => (
             <li
-              key={className}
+              key={index}
               className="mb-2 text-lg flex justify-between border-b pb-2"
             >
-              <span className="capitalize">{className}:</span>
-              <strong>{teacherName}</strong>
+              <span className="capitalize">{teacher.name}:</span>
+              <strong>{teacher.teacherName}</strong>
             </li>
           ))}
         </ul>

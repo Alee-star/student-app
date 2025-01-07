@@ -20,3 +20,8 @@ export interface Class {
   teacherName: string;
   students: Student[];
 }
+
+export interface Teacher {
+  name: string;
+  teacherName: string;
+}
