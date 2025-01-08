@@ -10,11 +10,10 @@ const StudentsPage = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      try {
-        const allStudents = await getStudents();
+      const allStudents = await getStudents();
+
+      if (allStudents.length) {
         setStudents(allStudents);
-      } catch (error) {
-        console.error("Error fetching students data:", error);
       }
     };
     fetchStudents();
@@ -51,7 +50,7 @@ const StudentsPage = () => {
       </div>
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80 text-center">
         <h1 className="text-xl font-bold">Students</h1>
-        {hasSearched && filteredStudents.length === 0 ? (
+        {hasSearched && filteredStudents.length ? (
           <p className="pt-2">No Students Found</p>
         ) : (
           <ul>
