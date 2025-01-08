@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchClassNames } from "../helpers";
-import api from "../api";
 import { Class } from "../types/userList";
 import ClassDetails from "../components/ClassDetails";
+import { fetchClassNames } from "../helpers";
+import api from "../api";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);

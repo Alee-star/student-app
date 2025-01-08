@@ -7,11 +7,10 @@ const StudentsPage = () => {
 
   useEffect(() => {
     const fetchStudents = async () => {
-      try {
-        const allStudents = await getStudents();
+      const allStudents = await getStudents();
+
+      if (allStudents.length) {
         setStudents(allStudents);
-      } catch (error) {
-        console.error("Error fetching students data:", error);
       }
     };
     fetchStudents();
