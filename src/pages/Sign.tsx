@@ -34,7 +34,7 @@ const SignIn = () => {
         password,
       };
 
-      await api.post("/users", newUser);
+      await api.post("users", newUser);
 
       setError("");
       alert("Account created successfully!");
