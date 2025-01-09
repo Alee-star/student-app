@@ -13,7 +13,7 @@ const Login = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get("/users");
+        const response = await api.get("users");
         setUsers(response.data);
       } catch (err: any) {
         console.error("Error in fetching", err.message);

@@ -18,7 +18,7 @@ const SignIn = () => {
 
     try {
       // for existing users
-      const response = await api.get("/users");
+      const response = await api.get("users");
       const PrevUser = response.data.find(
         (user: User) => user.username === username
       );

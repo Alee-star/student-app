@@ -33,7 +33,7 @@ const TeachersPage = () => {
               key={index}
               className="mb-2 text-lg flex justify-between border-b pb-2"
             >
-              <span className="capitalize">{teacher.name}:</span>
+              <span className="capitalize">{teacher.name}</span>
               <strong>{teacher.teacherName}</strong>
             </li>
           ))}

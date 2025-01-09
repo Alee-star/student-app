@@ -8,6 +8,7 @@ export default {
       backgroundImage: {
         banner: "url(/assets/School.jpg)",
         teacher: "url(/assets/teacher.jpg)",
+        students: "url(/assets/students.jpg)",
       },
     },
   },

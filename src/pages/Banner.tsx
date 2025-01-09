@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Class } from "../types/userList";
 import ClassDetails from "../components/ClassDetails";
 import { fetchClassNames } from "../helpers";
-import { Class } from "../types/userList";
 import api from "../api";
 
 const Banner = () => {
@@ -46,7 +46,7 @@ const Banner = () => {
   }, [activeTab]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-col items-center justify-center bg-banner bg-cover overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-banner bg-cover overflow-hidden">
       <div className="absolute inset-0 bg-black bg-opacity-50" />
       <div className="absolute top-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4 flex justify-center space-x-8">
         <Link
