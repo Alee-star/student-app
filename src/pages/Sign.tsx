@@ -19,11 +19,11 @@ const SignIn = () => {
     try {
       // for existing users
       const users = await getUsers();
-      const ExistingUser = users.find(
+      const existingUser = users.find(
         (user: User) => user.username === username
       );
 
-      if (ExistingUser) {
+      if (existingUser) {
         setError("Account already exists");
         return;
       }

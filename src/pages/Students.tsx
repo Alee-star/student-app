@@ -30,11 +30,11 @@ const StudentsPage = () => {
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const term = event.target.value;
-    setSearchTerm(term);
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
     const filtered = students.filter(
       (student) =>
-        student.name.toLowerCase().includes(term.toLowerCase()) &&
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (!selectedClass || student.className === selectedClass)
     );
     setFilteredStudents(filtered);
@@ -76,7 +76,7 @@ const StudentsPage = () => {
       </div>
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80 text-center">
         <h1 className="text-xl font-bold">Students</h1>
-        {filteredStudents.length === 0 ? (
+        {!filteredStudents.length ? (
           <p className="pt-2">No Students Found</p>
         ) : (
           <ul>
