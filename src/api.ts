@@ -1,4 +1,5 @@
 import api from "./axios";
+import { User } from "./types/userList";
 
 export const getClasses = async () => {
   try {
@@ -20,7 +21,7 @@ export const getUsers = async () => {
   }
 };
 
-export const createUser = async (newUser: any) => {
+export const createUser = async (newUser: User): Promise<void> => {
   try {
     await api.post("/users", newUser);
   } catch (error) {

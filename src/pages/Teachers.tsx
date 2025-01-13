@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Class, Teacher } from "../types/userList";
 import { getClasses } from "../api";
+import { Class, Teacher } from "../types/userList";
 
 const TeachersPage = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
