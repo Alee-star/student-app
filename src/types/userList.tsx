@@ -12,6 +12,7 @@ export interface Student {
   name: string;
   id: string;
   marks: Mark[];
+  className?: string;
 }
 
 export interface Class {

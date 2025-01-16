@@ -1,39 +1,71 @@
 import { useEffect, useState } from "react";
-import { getStudents } from "../services/StudentService";
+import { getClasses } from "../api";
 import { Student } from "../types/userList";
 
 const StudentsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
   const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
-  const [hasSearched, setHasSearched] = useState(false);
+  const [classes, setClasses] = useState<string[]>([]);
+  const [selectedClass, setSelectedClass] = useState<string>("");
 
   useEffect(() => {
     const fetchStudents = async () => {
-      const allStudents = await getStudents();
-
-      if (allStudents.length) {
+      try {
+        const classesData = await getClasses();
+        setClasses(classesData.map((cls: any) => cls.name));
+        const allStudents = classesData.flatMap((cls: any) =>
+          cls.students.map((student: any) => ({
+            ...student,
+            className: cls.name,
+          }))
+        );
         setStudents(allStudents);
+        setFilteredStudents([]);
+      } catch (error) {
+        console.error("Error fetching students data:", error);
       }
     };
     fetchStudents();
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearch = () => {
-    const filtered = students.filter((student) =>
-      student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    const filtered = students.filter(
+      (student) =>
+        student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (!selectedClass || student.className === selectedClass)
     );
     setFilteredStudents(filtered);
-    setHasSearched(true);
+  };
+
+  const handleClassChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = event.target.value;
+    setSelectedClass(selected);
+    const filtered = students.filter(
+      (student) =>
+        (!selected || student.className === selected) &&
+        student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredStudents(filtered);
   };
 
   return (
     <div className="bg-students bg-cover h-screen flex flex-col p-6 items-center">
       <div className="w-full p-6 rounded-lg flex items-center space-x-3">
+        <select
+          value={selectedClass}
+          onChange={handleClassChange}
+          className="p-3 flex justify-between border border-gray-300 rounded-lg outline-none"
+        >
+          <option value="">All Classes</option>
+          {classes.map((cls) => (
+            <option key={cls} value={cls}>
+              {cls}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           placeholder="Search students..."
@@ -41,16 +73,10 @@ const StudentsPage = () => {
           onChange={handleSearchChange}
           className="w-full p-3 border border-gray-300 rounded-lg outline-none"
         />
-        <button
-          onClick={handleSearch}
-          className="p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-        >
-          Search
-        </button>
       </div>
       <div className="bg-white z-10 shadow-md rounded-lg p-6 w-80 text-center">
         <h1 className="text-xl font-bold">Students</h1>
-        {hasSearched && filteredStudents.length ? (
+        {!filteredStudents.length ? (
           <p className="pt-2">No Students Found</p>
         ) : (
           <ul>

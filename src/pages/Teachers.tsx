@@ -1,25 +1,24 @@
 import { useEffect, useState } from "react";
+import { getClasses } from "../api";
 import { Class, Teacher } from "../types/userList";
-import api from "../api";
 
 const TeachersPage = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   useEffect(() => {
-    api
-      .get("/classes")
-      .then((response) => {
-        const teacherData: Teacher[] = response.data.map(
-          (classItem: Class) => ({
-            name: classItem.name,
-            teacherName: classItem.teacherName,
-          })
-        );
+    const fetchTeachers = async () => {
+      try {
+        const classesData = await getClasses();
+        const teacherData: Teacher[] = classesData.map((classItem: Class) => ({
+          name: classItem.name,
+          teacherName: classItem.teacherName,
+        }));
         setTeachers(teacherData);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
+      }
+    };
+    fetchTeachers();
   }, []);
 
   return (
@@ -33,7 +32,7 @@ const TeachersPage = () => {
               key={index}
               className="mb-2 text-lg flex justify-between border-b pb-2"
             >
-              <span className="capitalize">{teacher.name}</span>
+              <span className="capitalize">{teacher.name}:</span>
               <strong>{teacher.teacherName}</strong>
             </li>
           ))}
