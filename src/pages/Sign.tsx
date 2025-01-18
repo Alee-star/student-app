@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../components/UserForm";
 import { User } from "../types/userList";
-import api from "../api";
+import { getUsers, createUser } from "../api";
 
 const SignIn = () => {
   const [error, setError] = useState("");
@@ -18,12 +18,12 @@ const SignIn = () => {
 
     try {
       // for existing users
-      const response = await api.get("/users");
-      const PrevUser = response.data.find(
+      const users = await getUsers();
+      const existingUser = users.find(
         (user: User) => user.username === username
       );
 
-      if (PrevUser) {
+      if (existingUser) {
         setError("Account already exists");
         return;
       }
@@ -34,7 +34,7 @@ const SignIn = () => {
         password,
       };
 
-      await api.post("/users", newUser);
+      await createUser(newUser);
 
       setError("");
       alert("Account created successfully!");

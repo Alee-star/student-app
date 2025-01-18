@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import ClassDetails from "../components/ClassDetails";
-import { fetchClassNames } from "../helpers";
 import { Class } from "../types/userList";
-import api from "../api";
+import { fetchClassNames } from "../helpers";
+import ClassDetails from "../components/classDetails";
+import { getClasses } from "../api";
 
 const Banner = () => {
   const [activeTab, setActiveTab] = useState<string | null>(null);
@@ -30,24 +30,23 @@ const Banner = () => {
   useEffect(() => {
     const fetchClassData = async () => {
       try {
-        const response = await api.get("/classes");
-        const selectedClass = response.data.find(
-          (cls: Class) => cls.name.toLowerCase() === activeTab?.toLowerCase()
-        );
-        setClassData(selectedClass || null);
+        if (activeTab) {
+          const response = await getClasses();
+          const selectedClass = response.find(
+            (cls: Class) => cls.name.toLowerCase() === activeTab.toLowerCase()
+          );
+          setClassData(selectedClass || null);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
-    if (activeTab) {
-      fetchClassData();
-    }
+    fetchClassData();
   }, [activeTab]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-col items-center justify-center bg-banner bg-cover overflow-hidden">
-      <div className="absolute inset-0 bg-black bg-opacity-50" />
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-banner bg-cover overflow-hidden">
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       <div className="absolute top-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4 flex justify-center space-x-8">
         <Link
           to="/teachers"

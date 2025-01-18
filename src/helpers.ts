@@ -1,11 +1,11 @@
 import { Class } from "./types/userList";
-import api from "./api";
+import { getClasses } from "./api";
 
 export const fetchClassNames = async (): Promise<string[]> => {
   try {
-    const response = await api.get("/classes");
+    const response = await getClasses();
 
-    const classNames = response.data.map((cls: Class) => cls.name);
+    const classNames = response.map((cls: Class) => cls.name);
     return classNames;
   } catch (error) {
     console.error("Error fetching class names:", error);
