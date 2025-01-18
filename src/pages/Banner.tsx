@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Class } from "../types/userList";
-import ClassDetails from "../components/ClassDetails";
 import { fetchClassNames } from "../helpers";
+import ClassDetails from "../components/classDetails";
 import { getClasses } from "../api";
 
 const Banner = () => {
